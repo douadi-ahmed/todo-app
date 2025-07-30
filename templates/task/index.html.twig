@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ma Todo List</h1>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Date limite</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.dueDate ? task.dueDate|date('d/m/Y H:i') }}</td>
+                <td>{{ task.isDone ? '✅ Terminé' : '❌ En cours' }}</td>
+                <td>
+                    <a href="{{ path('app_task_edit', {'id': task.id}) }}">✏️</a>
+                    {{ include('task/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{{ path('app_task_new') }}">➕ Nouvelle tâche</a>
+{% endblock %}
